@@ -50,8 +50,9 @@ Users should be able to:
 
 - Semantic HTML5
 - Tailwind CSS
+- **React**
+- React Hooks (`useState`, `useEffect`)
 - Mobile-first workflow
-- Vanilla JavaScript
 - Fetch API
 - Advice Slip API
 
@@ -61,33 +62,35 @@ Users should be able to:
 
 In this project, I reinforced several important frontend concepts:
 
-- Handling asynchronous operations using `async/await`
-- Fetching data from an external API and handling errors properly
-- Managing UI states such as loading and disabled buttons
-- Improving user experience with visual feedback during API requests
+- Managing component state using React Hooks
+- Handling asynchronous operations when fetching data from an external API
+- Passing props between components to handle events and UI state
+- Managing loading states and disabling UI elements during API requests
+- Improving user experience with visual feedback
 - Building responsive layouts using Tailwind CSS utility classes
-- Using the `<picture>` element to serve responsive images efficiently
+- Structuring a small React application with reusable components
 
 Example of the API handling logic:
 
 ```js
-const response = await fetch('https://api.adviceslip.com/advice', {
-  cache: 'no-store',
-});
+import { useEffect, useState } from 'react';
 
-const { id, advice } = (await response.json()).slip;
+function App() {
+  const [advice, setAdvice] = useState('');
+  const [id, setId] = useState(null);
+
+  useEffect(() => {
+    const fetchAdvice = async () => {
+      const response = await fetch('https://api.adviceslip.com/advice', {
+        cache: 'no-store',
+      });
+
+      const data = await response.json();
+      setAdvice(data.slip.advice);
+      setId(data.slip.id);
+    };
+
+    fetchAdvice();
+  }, []);
+}
 ```
-
-### Continued development
-
-In future projects, I want to:
-
-- Improve accessibility (ARIA attributes and keyboard interactions)
-- Explore animations and micro-interactions for better UX
-- Practice more projects using external APIs
-- Continue improving code structure and maintainability
-
-## Author
-
-- Frontend Mentor - [@juanfeoru](https://www.frontendmentor.io/profile/juanfeoru)
-- Twitter - [@purpuraaaaaaa](https://www.twitter.com/purpuraaaaaaa)
